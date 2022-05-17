@@ -1,6 +1,4 @@
-const dotenv = require('dotenv');
-dotenv.config();
-
+const { TOKEN } = require('./config');
 const { Client, Intents } = require('discord.js');
 const { Player } = require('discord-player');
 
@@ -58,5 +56,13 @@ client.on('messageCreate', async message => {
     }
 });
 
+client.on('interactionCreate', async interaction => {
+    if (!interaction.isCommand) return;
+
+    if (interaction.commandName === 'play') {
+        await interaction.reply(`${interaction.user}`);
+    }
+});
+
 client.on("error", console.warn);
-client.login(process.env.TOKEN);
+client.login(TOKEN);

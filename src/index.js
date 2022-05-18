@@ -26,9 +26,10 @@ client.on('messageCreate', async message => {
     }
 });
 
-client.on('interactionCreate', interaction => {
+client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand()) return;
 
+    await interaction.deferReply();
     commands[interaction.commandName].run(interaction, client);
 });
 

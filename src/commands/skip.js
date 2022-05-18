@@ -12,13 +12,13 @@ module.exports = {
         const queue = client.player.getQueue(interaction.guildId);
         const embed = new MessageEmbed();
 
-        if (!queue) return await interaction.reply("No songs! No queue? No balls ಥ_ಥ");
+        if (!queue) return await interaction.editReply("No songs! No queue? No balls ಥ_ಥ");
 
         const currentSong = queue.current;
         embed.setDescription(`${currentSong.title} \n has been skipped!`);
 
         queue.skip();
-        await interaction.reply({
+        await interaction.editReply({
             embeds: [embed]
         });
     }

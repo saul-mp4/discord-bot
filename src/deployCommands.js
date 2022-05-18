@@ -2,11 +2,13 @@ const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 
 const { TOKEN, CLIENT_ID, GUILD_ID } = require('./config');
+const commands = require('./commands');
 
-const commands = [{
-    name: 'play',
-    description: 'replies user'
-}];
+const slashCommands = [];
+
+for (const commandName in commands) {
+    slashCommands.push(commands[commandName].command);
+}
 
 const rest = new REST({ version: '9' }).setToken(TOKEN);
 
@@ -16,7 +18,7 @@ const rest = new REST({ version: '9' }).setToken(TOKEN);
 
         await rest.put(
             Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID),
-            { body: commands }
+            { body: slashCommands }
         );
 
         console.log('Commands was deployed');

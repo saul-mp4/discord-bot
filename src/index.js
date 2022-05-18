@@ -1,17 +1,11 @@
-const { TOKEN } = require('./config');
 const { Client, Intents } = require('discord.js');
 const { Player } = require('discord-player');
-const fs = require('fs');
+
+const { TOKEN } = require('./config');
+const commands = require('./commands');
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES] });
 const player = new Player(client);
-
-const commands = {};
-const commandFiles = fs.readdirSync("./src/commands").filter(file => file.endsWith(".js"));
-for ( const file of commandFiles ) {
-    const slashCommand = require(`./commands/${file}`);
-    commands[slashCommand.name] = slashCommand;
-}
 
 player.on("trackStart", (queue, track) => queue.metadata.channel.send(`Now playing ${track.title}`));
 
@@ -35,7 +29,7 @@ client.on('messageCreate', async message => {
         const query = message.content.split(' ').slice(1).join(' ');
         //Check who sent the message if he wrote name of song after command
         if (!query) return message.reply(`${message.member} dai nazvanie pesni ಠ_ಠ`);
-        
+
 
         const queue = player.createQueue(message.guild, {
             metadata: {
@@ -64,10 +58,10 @@ client.on('messageCreate', async message => {
     }
 });
 
-client.on('interactionCreate', async interaction => {
+client.on('interactionCreate', interaction => {
     if (!interaction.isCommand()) return;
 
-    await commands[interaction.commandName].run(interaction, client);
+    commands[interaction.commandName].run(interaction, client);
 });
 
 client.on("error", console.warn);

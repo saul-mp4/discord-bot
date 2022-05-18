@@ -15,7 +15,7 @@ module.exports = {
         if (!queue) return await interaction.editReply("No songs! No queue? No balls ಥ_ಥ");
 
         const currentSong = queue.current;
-        embed.setDescription(`${currentSong.title} \n has been skipped!`);
+        embed.setDescription(`${currentSong.title} \nPesnya syebalas' (▀̿Ĺ̯▀̿ ̿)`);
 
         queue.skip();
         await interaction.editReply({

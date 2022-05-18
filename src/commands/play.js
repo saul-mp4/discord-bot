@@ -45,7 +45,7 @@ module.exports = {
         if (!track) return interaction.editReply(`${query}, ne nashli track (ಥ﹏ಥ)`);
 
         queue.addTrack(track);
-        embed.setDescription(`**${track.title}** \n has been added to the queue ヾ(⌐■_■)ノ♪`)
+        embed.setDescription(`**${track.title}** \nPesnya dobavlena v queue ヾ(⌐■_■)ノ♪`)
             .setThumbnail(track.thumbnail)
             .setFooter({ text: `Duration: ${track.duration}` });
 

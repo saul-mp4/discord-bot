@@ -1,9 +1,17 @@
 const { TOKEN } = require('./config');
 const { Client, Intents } = require('discord.js');
 const { Player } = require('discord-player');
+const fs = require('fs');
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES] });
 const player = new Player(client);
+
+const commands = {};
+const commandFiles = fs.readdirSync("./src/commands").filter(file => file.endsWith(".js"));
+for ( const file of commandFiles ) {
+    const slashCommand = require(`./commands/${file}`);
+    commands[slashCommand.name] = slashCommand;
+}
 
 player.on("trackStart", (queue, track) => queue.metadata.channel.send(`Now playing ${track.title}`));
 
@@ -57,11 +65,9 @@ client.on('messageCreate', async message => {
 });
 
 client.on('interactionCreate', async interaction => {
-    if (!interaction.isCommand) return;
+    if (!interaction.isCommand()) return;
 
-    if (interaction.commandName === 'play') {
-        await interaction.reply(`${interaction.user}`);
-    }
+    await commands[interaction.commandName].run(interaction, client);
 });
 
 client.on("error", console.warn);

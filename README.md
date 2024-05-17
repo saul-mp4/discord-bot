@@ -1,9 +1,8 @@
-## This is Discord music bot with basic slash commands
-Discord bot was written on JavaScript and can be run on Node.js server
+# What it is?
+Discord music bot.
 
-## Frameworks:
-- Discord js
-- discord-player
-
-## Essential elements of program
-Command handler that allows easily extend slash commands.
+# How to run it?
+- Pull code
+- Add your discord API keys
+- Add bot to your server
+- Run node runtime
